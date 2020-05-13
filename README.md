@@ -1,2 +1,2 @@
-# canopy3-themes-Simple
+# canopy3-themes-simple
 Basic Bootstrap theme that ships with Canopy3
