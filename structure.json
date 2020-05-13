@@ -1,0 +1,23 @@
+{
+  "title": "Simple",
+  "directory": "canopy3-theme-simple",
+  "description": "A basic page for testing and setup",
+  "defaultPage": "basic",
+  "screenshot": "",
+  "pages": {
+    "basic": {
+      "filename": "basic.html",
+      "title": "Basic",
+      "columns": 1,
+      "altSections": ["top", "bottom"],
+      "description": "Basic one column page display"
+    },
+    "frontPage": {
+      "filename": "front.html",
+      "title": "Front page",
+      "altSections": ["top", "bottom", "rightSide"],
+      "columns": 2,
+      "description": "Front page with large left column, smaller right side"
+    }
+  }
+}
