@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-  <head>
-    <title>TODO supply a title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <div>TODO write content</div>
-  </body>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <?=$t->header?>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <?= $t->includeStyle('dist/css/bootstrap.css')?>
+  <?= $t->includeScript('dist/js/bootstrap.js')?>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="top-content"><?=$t->top?></div>
+        <?php if(isset($t->siteTitle)):?><h1><?=$t->siteTitle?></h1><?php endif;?>
+        <div class="main-content"><?=$t->main?></div>
+        <div class="bottom-content"><?=$t->bottom?></div>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>
