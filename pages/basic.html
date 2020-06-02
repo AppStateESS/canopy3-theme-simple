@@ -13,13 +13,14 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <div class="top-content"><?=$t->top?></div>
-        <?php if(isset($t->siteTitle)):?><h1><?=$t->siteTitle?></h1><?php endif;?>
-        <div class="main-content"><?=$t->main?></div>
-        <div class="bottom-content"><?=$t->bottom?></div>
-      </div>
-    </div>
-  </div>
+        <div class="top-content"><?=$t->top?></div><!-- end top-content -->
+        <div class="main-content">
+          <?php if(isset($t->siteTitle)):?><h1><?=$t->siteTitle?></h1><?php endif;?>
+          <?=$t->main?></div><!-- end main-content-->
+        <div class="bottom-content"><?=$t->bottom?></div><!-- end bottom-content -->
+      </div><!-- end col-12 -->
+    </div><!-- end row -->
+  </div><!-- end container-fluid -->
 </body>
 
 </html>
