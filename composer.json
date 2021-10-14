@@ -1,0 +1,8 @@
+{
+  "name": "appstateess/canopy3-theme-simple",
+  "description": "A simple theme package for Canopy3. No frills and used for testing.",
+  "type": "canopy3-theme",
+  "require": {
+    "composer/installers": "~1.12"
+  }
+}
