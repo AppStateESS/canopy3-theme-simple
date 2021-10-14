@@ -1,10 +1,10 @@
 /* global module, __dirname */
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const sourceDir = path.resolve(__dirname, 'js')
 const destDir = path.resolve(__dirname, 'dist')
 const sourceSassDir = path.resolve(__dirname, 'scss')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = (env, argv) => {
   const inProduction = argv.mode === 'production'
@@ -13,73 +13,22 @@ module.exports = (env, argv) => {
   const settings = {
     entry: {
       'js/bootstrap.js': sourceDir + '/bootstrap.js',
-      'css/bootstrap.css': sourceSassDir + '/bootstrap.scss',
+      'css/bootstrap': sourceSassDir + '/bootstrap.scss',
     },
     output: {
       path: destDir,
       filename: '[name]',
     },
-    resolve: {
-      extensions: ['.js', '.jsx'],
-    },
-    plugins: [new ExtractTextPlugin('css/bootstrap.css', {allChunks: true})],
-    externals: {
-      $: 'jQuery',
-    },
+    plugins: [new MiniCssExtractPlugin()],
     module: {
       rules: [
         {
-          test: require.resolve('jquery'),
+          test: /\.s?css$/i,
           use: [
-            {
-              loader: 'expose-loader',
-              options: 'jQuery',
-            },
-            {
-              loader: 'expose-loader',
-              options: '$',
-            },
+            MiniCssExtractPlugin.loader,
+            {loader: 'css-loader', options: {sourceMap: true}},
+            {loader: 'sass-loader', options: {sourceMap: true}},
           ],
-        },
-        {
-          test: /\.scss$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
-                },
-              },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: true,
-                },
-              },
-            ],
-          }),
-        },
-        {
-          test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-          exclude: '/node_modules/',
-          loader: 'url-loader?limit=100000',
-        },
-        {
-          test: /\.jsx?$/,
-          enforce: 'pre',
-          loader: 'jshint-loader',
-          exclude: '/node_modules/',
-          include: destDir,
-        },
-        {
-          test: /\.jsx?/,
-          include: sourceDir,
-          loader: 'babel-loader',
-          query: {
-            presets: ['@babel/preset-env'],
-          },
         },
       ],
     },
@@ -100,18 +49,10 @@ module.exports = (env, argv) => {
   }
 
   if (inProduction) {
-    settings.plugins.push(
-      new OptimizeCssAssetsPlugin({
-        assetNameRegExp: /css\/bootstrap\.css$/g,
-        cssProcessor: require('cssnano'),
-        cssProcessorOptions: {
-          discardComments: {
-            removeAll: true,
-          },
-        },
-        canPrint: true,
-      })
-    )
+    settings.optimization = {
+      minimize: true,
+      minimizer: [new TerserPlugin()],
+    }
   }
   return settings
 }
